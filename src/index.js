@@ -28,7 +28,7 @@ var APP_ID = 'amzn1.ask.skill.ef643a41-db86-4d9e-a350-553094cc9372'; // 'amzn1.e
  */
 var AlexaSkill = require('./AlexaSkill');
 
-var num = '101';
+var num = '107';
 var http = require('http');
 var url = 'http://HOST/cgi-bin/horn2.cgi?ajax=1&style=old&horn=off&alexa=' + num;
 
@@ -84,15 +84,12 @@ exports.handler = function (event, context) {
 
 function handleHorn(intent, session, response) {
     console.log("Horn HornIntent calling URL: " + url);
-    response.tell('Testing ' + num + ' a.  URL: ' + url);
     http.get(url, function(res) {
         console.log("Horn HornIntent called remote succeeded, status code: " + res.statusCode);
-//            response.tell('Got response: ' + res.statusCode);
-        context.done(null, '');
+        response.tell('OK');
     }).on('error', function(e) {
         console.log("Horn HornIntent called remote failed, status code: " + res.statusCode);
-//            response.tell('Got error: ' + e.message);
-        context.done(null, '');
+        response.tell('Received error: ' + e.message);
     });
     console.log("Horn HornIntent called remote done (?): " + num);
 }
